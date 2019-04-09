@@ -1,20 +1,18 @@
-
 package arkanoid;
 
 import javax.swing.*;
 import java.awt.*;
 
-
 public class Menu extends JPanel {
 
 
     public Menu(String name) {
-        
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JButton b1 = new JButton("Start Game");
         JButton b2 = new JButton("High Score");
         JButton b3 = new JButton("Exit Game");
-        
+
         b1.setAlignmentX(CENTER_ALIGNMENT);
         b1.setMaximumSize(new Dimension(300, 100));
 

@@ -3,9 +3,9 @@ package arkanoid;
 class Ball {
 
     private int ballposX = 120;
-    private int ballposY = 350;
-    public int ballXdir = -2;
-    public int ballYdir = -1;
+    private int ballposY = 550;
+    public int ballXdir = -1;
+    public int ballYdir = -2;
     private int ballSize = 20;
 
     public void setPos(int x, int y) {

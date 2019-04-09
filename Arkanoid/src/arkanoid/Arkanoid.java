@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 
 public class Arkanoid {
 
-
     public static void main(String[] args) {
         JFrame obj = new JFrame();
         int c = 1;
@@ -18,25 +17,33 @@ public class Arkanoid {
         obj.setVisible(true);
         obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         A:
+        //while (true) 
         {
             switch (c) {
                 case 0:
-                    obj.remove(obj.getContentPane());
-                    obj.add(menu);
+                    if (obj.getContentPane() != menu) {
+                        obj.remove(obj.getContentPane());
+                        obj.add(menu);
+                    }
                     break;
                 case 1:
-                    obj.remove(obj.getContentPane());
-                    obj.add(gamePlay);
+                    if (obj.getContentPane() != gamePlay) {
+                        obj.remove(obj.getContentPane());
+                        obj.add(gamePlay);
+                        while(gamePlay.timer.isRunning());
+                    }
                     break;
                 case 2:
-                    obj.remove(obj.getContentPane());
-                    obj.add(highScore);
+                    if (obj.getContentPane() != highScore) {
+                        obj.remove(obj.getContentPane());
+                        obj.add(highScore);
+                    }
                     break;
+                case 3:
+                    break A;
             }
-            if (c == 3) {
-                break A;
-            }
+
         }
     }
-
 }
+
