@@ -2,35 +2,43 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class Menu extends JFrame
+public class Menu extends JPanel
 {
 	
 	public Menu(String name)
 	{
-		super(name);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
-		setBounds(100, 100, 300, 400);
+		
 
+		JFrame f = new JFrame(name);
+		f.setMinimumSize(new Dimension(300, 400));
+		f.setResizable(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.add(this);
+		
+
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JButton b1 = new JButton("Start Game");
 		JButton b2 = new JButton("High Score");
 		JButton b3 = new JButton("Exit Game");
 		
+		b1.setAlignmentX(CENTER_ALIGNMENT);
+		b1.setMaximumSize(new Dimension(100, 50));
 		
-		setLayout(null);
+		b2.setAlignmentX(CENTER_ALIGNMENT);
+		b2.setMaximumSize(new Dimension(100, 50));
 		
-		b1.setLocation(100, 50);
-		b1.setSize(100, 50);
-		b2.setLocation(100, 150);
-		b2.setSize(100, 50);
-		b3.setLocation(100, 250);
-		b3.setSize(100, 50);
-
+		b3.setAlignmentX(CENTER_ALIGNMENT);
+		b3.setMaximumSize(new Dimension(100, 50));
+		
+		
+		add(Box.createRigidArea(new Dimension(0, 50)));
 		add(b1);
+		add(Box.createRigidArea(new Dimension(0, 50)));
 		add(b2);
+		add(Box.createRigidArea(new Dimension(0, 50)));
 		add(b3);
-
-		setVisible(true);
+		
+		f.setVisible(true);
 	}
 	
 	public static void main(String[] args) 
