@@ -16,7 +16,7 @@ public class Arkanoid {
         obj.setResizable(false);
         obj.setVisible(true);
         obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        obj.add(gamePlay);
+        obj.add(menu);
         //obj.remove(menu);
         //obj.add(gamePlay);
 
