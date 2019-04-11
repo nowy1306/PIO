@@ -62,7 +62,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             ball_1.setDir(0, 0);
             g.setColor(Color.red);
             g.setFont(new Font("serif", Font.BOLD, 50));
-            g.drawString("GAME OVER Score: " + score, 150, 350);
+            g.drawString("GAME OVER Score: " + score, 150, 420);
         }
 
         g.dispose();
