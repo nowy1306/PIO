@@ -6,7 +6,7 @@ class Ball {
     private int ballposY = 550;
     public int ballXdir = -1;
     public int ballYdir = -2;
-    private int ballSize = 20;
+    private int ballSize = 15;
 
     public void setPos(int x, int y) {
         ballposX = x;

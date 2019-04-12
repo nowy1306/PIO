@@ -4,7 +4,7 @@ class Paddle {
 
     private int paddleposX = 310;
     private int paddleposY = 720;
-    private int paddleSize = 120;
+    private int paddleSize = 150;
     private int thick = 10;
 
     public void setPos(int x) {
