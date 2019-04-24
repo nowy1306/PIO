@@ -1,10 +1,11 @@
 package arkanoid;
 
 import java.awt.Graphics;
+import java.io.IOException;
 import javax.swing.JFrame;
 
 public class Arkanoid {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         JFrame obj = new JFrame();
         int c = 0;
         //Gameplay gamePlay = new Gameplay();

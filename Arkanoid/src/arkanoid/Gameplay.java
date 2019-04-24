@@ -75,8 +75,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             ball_1.setDir(0, 0);
             timer.stop();
             this.setVisible(false);
-            obj.add(new HighScoreIn(score) );
-            repaint();
+            obj.add(new HighScoreIn(obj, score) );
+            obj.repaint();
             
             
         }

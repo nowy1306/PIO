@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Menu extends JPanel {
 
@@ -52,7 +55,7 @@ public class Menu extends JPanel {
         obj.repaint();
     }
 
-    void setHighScore() {
+    void setHighScore() throws IOException {
         obj.add(new HighScore(obj));
         this.setVisible(false);
         obj.repaint();
@@ -74,8 +77,15 @@ public class Menu extends JPanel {
                     setgame();
                     break;
                 case 2:
-                    setHighScore();
+                {
+                    try {
+                        setHighScore();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                     break;
+
                 case 3:
                     System.exit(0);
 
