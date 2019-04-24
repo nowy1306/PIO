@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/witol/OneDrive/Dokumenty/NetBeansProjects/Arkanoid/src/arkanoid/Gameplay.java</file>
-            <file>file:/C:/Users/witol/OneDrive/Dokumenty/NetBeansProjects/Arkanoid/src/arkanoid/Ball.java</file>
-            <file>file:/C:/Users/witol/OneDrive/Dokumenty/NetBeansProjects/Arkanoid/src/arkanoid/Arkanoid.java</file>
-            <file>file:/C:/Users/witol/OneDrive/Dokumenty/NetBeansProjects/Arkanoid/src/arkanoid/Menu.java</file>
-            <file>file:/C:/Users/witol/OneDrive/Dokumenty/NetBeansProjects/Arkanoid/src/arkanoid/Paddle.java</file>
-            <file>file:/C:/Users/witol/OneDrive/Dokumenty/NetBeansProjects/Arkanoid/src/arkanoid/HighScore.java</file>
-            <file>file:/C:/Users/witol/OneDrive/Dokumenty/NetBeansProjects/Arkanoid/src/arkanoid/MapGenerator.java</file>
+            <file>file:/C:/Users/mjgaj/Desktop/PIO/PIO-Koncepcja/Arkanoid/src/arkanoid/Gameplay.java</file>
+            <file>file:/C:/Users/mjgaj/Desktop/PIO/PIO-Koncepcja/Arkanoid/src/arkanoid/Arkanoid.java</file>
+            <file>file:/C:/Users/mjgaj/Desktop/PIO/PIO-Koncepcja/Arkanoid/src/arkanoid/Paddle.java</file>
+            <file>file:/C:/Users/mjgaj/Desktop/PIO/PIO-Koncepcja/Arkanoid/src/arkanoid/Ball.java</file>
+            <file>file:/C:/Users/mjgaj/Desktop/PIO/PIO-Koncepcja/Arkanoid/src/arkanoid/HighScore.java</file>
+            <file>file:/C:/Users/mjgaj/Desktop/PIO/PIO-Koncepcja/Arkanoid/src/arkanoid/Menu.java</file>
+            <file>file:/C:/Users/mjgaj/Desktop/PIO/PIO-Koncepcja/Arkanoid/src/arkanoid/MapGenerator.java</file>
+            <file>file:/C:/Users/mjgaj/Desktop/PIO/PIO-Koncepcja/Arkanoid/src/arkanoid/HighScoreIn.java</file>
         </group>
     </open-files>
 </project-private>

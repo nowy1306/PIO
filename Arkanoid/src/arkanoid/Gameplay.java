@@ -1,6 +1,7 @@
 package arkanoid;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -17,20 +20,26 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     private boolean play = false;
     private int score = 0;
     public Timer timer;
-    private int delay = 8;
+    private int delay = 6;
     int mouseposX;
     int mouseposY;
     MapGenerator map = new MapGenerator();
 
     Paddle paddle = new Paddle();
     Ball ball_1 = new Ball();
-
-    public Gameplay() {
+    
+    JFrame obj;
+    
+    public Gameplay(JFrame o) {
+        setLayout(new FlowLayout() );
+        obj = o;
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         timer = new Timer(delay, this);
         timer.start();
+        
+        
 
     }
 
@@ -52,17 +61,24 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.blue);
         g.fillRect(paddle.getPosX(), paddle.getPosY(), paddle.getSize(), paddle.getThick());
 
+        //wynik
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("serif", Font.BOLD, 35));
+        g.drawString("" + score, 715, 45);
+
         // piłka
         g.setColor(Color.CYAN);
         g.fillOval(ball_1.getPosX(), ball_1.getPosY(), ball_1.getSize(), ball_1.getSize());
-        
-        
+
         if (ball_1.getPosY() > 800) {
             play = false;
             ball_1.setDir(0, 0);
-            g.setColor(Color.red);
-            g.setFont(new Font("serif", Font.BOLD, 50));
-            g.drawString("GAME OVER Score: " + score, 150, 350);
+            timer.stop();
+            this.setVisible(false);
+            obj.add(new HighScoreIn(score) );
+            repaint();
+            
+            
         }
 
         g.dispose();
@@ -74,6 +90,18 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         if (play) {
             if (new Rectangle(ball_1.getPosX(), ball_1.getPosY(), ball_1.getSize(), ball_1.getSize()).intersects(new Rectangle(paddle.getPosX(), paddle.getPosY(), paddle.getSize(), paddle.getThick()))) {
                 ball_1.setDir(ball_1.ballXdir, ball_1.ballYdir * (-1));
+                if ( ball_1.getPosX() <= (paddle.getPosX() + paddle.getSize() / 5)) {
+                    ball_1.setDir(-2, -2);
+                } else if (ball_1.getPosX() <= paddle.getPosX() + 2 * paddle.getSize() / 5 && ball_1.getPosX() > (paddle.getPosX() + paddle.getSize() / 5)) {
+                    ball_1.setDir(-1, -2);
+                } else if (ball_1.getPosX() > paddle.getPosX() + 2 * paddle.getSize() / 5 && ball_1.getPosX() <= (paddle.getPosX() + 3 * paddle.getSize() / 5)) {
+                    ball_1.setDir(0, -2);
+                } else if (ball_1.getPosX() <= paddle.getPosX() + 3 * paddle.getSize() / 5 && ball_1.getPosX() <= (paddle.getPosX() + 4 * paddle.getSize() / 5)) {
+                    ball_1.setDir(1, -2);
+                } else {
+                    ball_1.setDir(2, -2);
+                }
+
             }
             A:
             for (int i = 0; i < map.map.length; i++) {
@@ -91,7 +119,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                         if (ballRect.intersects(brickRect)) {
                             map.setBrickValue(map.map[i][j] - 1, i, j);
                             score += 5;
-                            if (ball_1.getPosX() + 19 <= brickRect.x || ball_1.getPosX() + 1 >= brickRect.x + brickRect.width) {
+                            if (ball_1.getPosX() + ball_1.getSize() - 1 <= brickRect.x || ball_1.getPosX() + 1 >= brickRect.x + brickRect.width) {
                                 ball_1.setDir(ball_1.ballXdir * (-1), ball_1.ballYdir);
                             } else {
                                 ball_1.setDir(ball_1.ballXdir, ball_1.ballYdir * (-1));
