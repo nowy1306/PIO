@@ -1,12 +1,16 @@
 package arkanoid;
 
+import GUI_arkanoid.MainGui;
+import GUI_arkanoid.Menu;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 
 public class Arkanoid {
 
     public static void main(String[] args){
-        JFrame obj = new JFrame();
+       MainGui gui = new MainGui();
+       gui.start();
+        /*JFrame obj = new JFrame();
         int c = 0;
         Gameplay gamePlay = new Gameplay();
         HighScore highScore = new HighScore();
@@ -17,8 +21,6 @@ public class Arkanoid {
         obj.setVisible(true);
         obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         obj.add(menu);
-        //obj.remove(menu);
-        //obj.add(gamePlay);
-
+*/
     }
 }

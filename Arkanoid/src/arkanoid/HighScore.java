@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 
-class HighScore extends JPanel {
+public class HighScore extends JPanel {
 
     @Override
     public void paint(Graphics g){
