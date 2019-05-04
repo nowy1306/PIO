@@ -1,14 +1,14 @@
 package arkanoid;
 
-class Ball {
+public class Ball {
 
-    private int ballposX = 120;
-    private int ballposY = 550;
-    public int ballXdir = 0;
-    public int ballYdir = -2;
-    private int ballSize = 15;
+    private double ballposX = 120;
+    private double ballposY = 550;
+    public double ballXdir = -1;
+    public double ballYdir = -2;
+    private int ballSize = 20;
 
-    public void setPos(int x, int y) {
+    public void setPos(double x, double y) {
         ballposX = x;
         ballposY = y;
     }
@@ -17,16 +17,16 @@ class Ball {
         ballSize = size;
     }
 
-    public void setDir(int dirX, int dirY) {
+    public void setDir(double dirX, double dirY) {
         ballXdir = dirX;
         ballYdir = dirY;
     }
 
-    public int getPosX() {
+    public double getPosX() {
         return ballposX;
     }
 
-    public int getPosY() {
+    public double getPosY() {
         return ballposY;
     }
 

@@ -1,105 +1,51 @@
 package arkanoid;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Gameplay extends JPanel implements KeyListener, ActionListener {
+public class Gameplay implements KeyListener, ActionListener {
 
-    private boolean play = false;
-    private int score = 0;
+    public boolean play = true;
+    public int score = 0;
     public Timer timer;
     private int delay = 6;
+    static double BALL_SPEED = 2.5;
     int mouseposX;
     int mouseposY;
-    MapGenerator map = new MapGenerator();
+    public MapGenerator map = new MapGenerator();
 
-    Paddle paddle = new Paddle();
-    Ball ball_1 = new Ball();
-    
-    JFrame obj;
-    
-    public Gameplay(JFrame o) {
-        setLayout(new FlowLayout() );
-        obj = o;
-        addKeyListener(this);
-        setFocusable(true);
-        setFocusTraversalKeysEnabled(false);
+    public Paddle paddle = new Paddle();
+    public Ball ball_1 = new Ball();
+
+    public Gameplay() {
         timer = new Timer(delay, this);
         timer.start();
-        
-        
 
     }
 
-    @Override
-    public void paint(Graphics g) {
-        //tło
-        g.setColor(Color.black);
-        g.fillRect(0, 0, 800, 800);
-
-        //granice
-        g.setColor(Color.gray);
-        g.fillRect(0, 0, 10, 800);
-        g.fillRect(0, 0, 800, 10);
-        g.fillRect(784, 0, 10, 800);
-
-        //map
-        map.draw((Graphics2D) g);
-        // platforma
-        g.setColor(Color.blue);
-        g.fillRect(paddle.getPosX(), paddle.getPosY(), paddle.getSize(), paddle.getThick());
-
-        //wynik
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("serif", Font.BOLD, 35));
-        g.drawString("" + score, 715, 45);
-
-        // piłka
-        g.setColor(Color.CYAN);
-        g.fillOval(ball_1.getPosX(), ball_1.getPosY(), ball_1.getSize(), ball_1.getSize());
-
-        if (ball_1.getPosY() > 800) {
-            play = false;
-            ball_1.setDir(0, 0);
-            timer.stop();
-            this.setVisible(false);
-            obj.add(new HighScoreIn(obj, score) );
-            obj.repaint();
-            
-            
-        }
-
-        g.dispose();
-    }
-
+   
     @Override
     public void actionPerformed(ActionEvent e) {
-        //timer.start();
+
         if (play) {
-            if (new Rectangle(ball_1.getPosX(), ball_1.getPosY(), ball_1.getSize(), ball_1.getSize()).intersects(new Rectangle(paddle.getPosX(), paddle.getPosY(), paddle.getSize(), paddle.getThick()))) {
-                ball_1.setDir(ball_1.ballXdir, ball_1.ballYdir * (-1));
-                if ( ball_1.getPosX() <= (paddle.getPosX() + paddle.getSize() / 5)) {
-                    ball_1.setDir(-2, -2);
-                } else if (ball_1.getPosX() <= paddle.getPosX() + 2 * paddle.getSize() / 5 && ball_1.getPosX() > (paddle.getPosX() + paddle.getSize() / 5)) {
-                    ball_1.setDir(-1, -2);
-                } else if (ball_1.getPosX() > paddle.getPosX() + 2 * paddle.getSize() / 5 && ball_1.getPosX() <= (paddle.getPosX() + 3 * paddle.getSize() / 5)) {
-                    ball_1.setDir(0, -2);
-                } else if (ball_1.getPosX() <= paddle.getPosX() + 3 * paddle.getSize() / 5 && ball_1.getPosX() <= (paddle.getPosX() + 4 * paddle.getSize() / 5)) {
-                    ball_1.setDir(1, -2);
+            if (new Rectangle((int) ball_1.getPosX(), (int) ball_1.getPosY(), ball_1.getSize(), ball_1.getSize()).intersects(new Rectangle(paddle.getPosX(), paddle.getPosY(), paddle.getSize(), paddle.getThick()))) {
+
+                double a = ball_1.getPosX() - paddle.getPosX() + ball_1.getSize() / 2;
+                double alf_d;
+                double alf_r;
+                if (a <= (paddle.getSize() / 2)) {
+                    alf_d = 30 + 60 * a / (paddle.getSize() / 2);
+                    alf_r = Math.toRadians(alf_d);
+                    ball_1.setDir((-1) * BALL_SPEED * Math.cos(alf_r), (-1) * BALL_SPEED * Math.sin(alf_r));
                 } else {
-                    ball_1.setDir(2, -2);
+                    alf_d = 150 - 60 * a / (paddle.getSize() / 2);
+                    alf_r = Math.toRadians(alf_d);
+                    ball_1.setDir(BALL_SPEED * Math.cos(alf_r), (-1) * BALL_SPEED * Math.sin(alf_r));
                 }
 
             }
@@ -113,7 +59,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                         int brickHight = map.brickHeight;
 
                         Rectangle rect = new Rectangle(brickX, brickY, brickWidth, brickHight);
-                        Rectangle ballRect = new Rectangle(ball_1.getPosX(), ball_1.getPosY(), ball_1.getSize(), ball_1.getSize());
+                        Rectangle ballRect = new Rectangle((int) ball_1.getPosX(), (int) ball_1.getPosY(), ball_1.getSize(), ball_1.getSize());
                         Rectangle brickRect = rect;
 
                         if (ballRect.intersects(brickRect)) {
@@ -130,18 +76,17 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 }
             }
             ball_1.move();
-            if (ball_1.getPosX() < 0) {
+            if (ball_1.getPosX() < 10) {
                 ball_1.setDir(ball_1.ballXdir * (-1), ball_1.ballYdir);
             }
-            if (ball_1.getPosY() < 0) {
+            if (ball_1.getPosY() < 10) {
                 ball_1.setDir(ball_1.ballXdir, ball_1.ballYdir * (-1));
             }
-            if (ball_1.getPosX() > 770) {
+            if (ball_1.getPosX() > 790 - ball_1.getSize()) {
                 ball_1.setDir(ball_1.ballXdir * (-1), ball_1.ballYdir);
             }
         }
 
-        repaint();
     }
 
     @Override
@@ -150,27 +95,17 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             if (paddle.getPosX() >= 800 - paddle.getSize()) {
                 paddle.setPos(800 - paddle.getSize());
             } else {
-                moveRight();
+                paddle.moveRight();
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             if (paddle.getPosX() < 10) {
                 paddle.setPos(10);
             } else {
-                moveLeft();
+                paddle.moveLeft();
             }
         }
 
-    }
-
-    public void moveRight() {
-        play = true;
-        paddle.setPos(paddle.getPosX() + 20);
-    }
-
-    public void moveLeft() {
-        play = true;
-        paddle.setPos(paddle.getPosX() - 20);
     }
 
     @Override
