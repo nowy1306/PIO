@@ -7,12 +7,12 @@ import javax.swing.Timer;
 public class Gameplay extends KeyAdapter implements ActionListener
 {
 
-    public boolean play = true;
-    public int score = 0;
-    public Timer timer;
+    private boolean play;
+    private int score = 0;
+    private Timer animationTimer;
     private Timer paddleTimer;
     private int keyCode;
-    private int delay = 6;
+    private static final int ANIMATION_DELAY = 6;
     private static final int PADDLE_DELAY = 20;
     private static final double BALL_SPEED = 5;
 
@@ -26,30 +26,24 @@ public class Gameplay extends KeyAdapter implements ActionListener
         paddle = new Paddle();
         map = new MapGenerator();
 
-        timer = new Timer(delay, this);
+        animationTimer = new Timer(ANIMATION_DELAY, this);
         paddleTimer = new Timer(PADDLE_DELAY, actionEvent -> {
             if (keyCode == KeyEvent.VK_RIGHT)
             {
-                if (paddle.getPosX() >= 800 - Paddle.PADDLE_LENGTH)
-                {
-                    paddle.setPos(800 - Paddle.PADDLE_LENGTH);
-                } else
+                if (paddle.getPosX() < GameplayGui.WIDTH - Paddle.PADDLE_LENGTH)
                 {
                     paddle.moveRight();
                 }
             }
             if (keyCode == KeyEvent.VK_LEFT)
             {
-                if (paddle.getPosX() < 10)
-                {
-                    paddle.setPos(10);
-                } else
+                if (paddle.getPosX() > 0)
                 {
                     paddle.moveLeft();
                 }
             }
         });
-        timer.start();
+        animationTimer.start();
         paddleTimer.start();
 
     }
@@ -112,17 +106,17 @@ public class Gameplay extends KeyAdapter implements ActionListener
                 }
             }
             ball.move();
-            if (ball.getPosX() < 10)
+            if (ball.getPosX() < 0)
             {
-                ball.setDir(ball.ballXdir * (-1), ball.ballYdir);
+                ball.setDir(-ball.ballXdir, ball.ballYdir);
             }
-            if (ball.getPosY() < 10)
+            if (ball.getPosY() < 0)
             {
-                ball.setDir(ball.ballXdir, ball.ballYdir * (-1));
+                ball.setDir(ball.ballXdir, -ball.ballYdir);
             }
-            if (ball.getPosX() > 790 - Ball.SIZE)
+            if (ball.getPosX() > GameplayGui.WIDTH - Ball.SIZE)
             {
-                ball.setDir(ball.ballXdir * (-1), ball.ballYdir);
+                ball.setDir(-ball.ballXdir, ball.ballYdir);
             }
         }
 
@@ -143,9 +137,27 @@ public class Gameplay extends KeyAdapter implements ActionListener
         return map;
     }
 
+    public int getScore()
+    {
+        return score;
+    }
+
+    public void start()
+    {
+        animationTimer.start();
+        paddleTimer.start();
+    }
+
+    public void stop()
+    {
+        animationTimer.stop();
+        paddleTimer.stop();
+    }
+
     @Override
     public void keyPressed(KeyEvent e)
     {
+        play = true;
         if(keyCode == 0)
         {
             keyCode = e.getKeyCode();

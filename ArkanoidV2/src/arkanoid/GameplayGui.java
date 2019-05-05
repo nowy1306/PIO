@@ -5,8 +5,8 @@ import javax.swing.*;
 
 public class GameplayGui extends JPanel
 {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 800;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 800;
     Gameplay game;
     private int fpsDelay = 20;
     Timer fpsTimer;
@@ -25,6 +25,7 @@ public class GameplayGui extends JPanel
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         fpsTimer.start();
+        game.start();
 
     }
 
@@ -36,10 +37,12 @@ public class GameplayGui extends JPanel
         g.fillRect(0, 0, 800, 800);
 
         //granice
+        /*
         g.setColor(Color.gray);
         g.fillRect(0, 0, 10, 800);
         g.fillRect(0, 0, 800, 10);
         g.fillRect(784, 0, 10, 800);
+         */
 
         //map
         game.getMap().draw((Graphics2D) g);
@@ -50,19 +53,19 @@ public class GameplayGui extends JPanel
         //wynik
         g.setColor(Color.WHITE);
         g.setFont(new Font("serif", Font.BOLD, 35));
-        g.drawString("" + game.score, 715, 45);
+        g.drawString("" + game.getScore(), 715, 45);
 
         // piłka
         g.setColor(Color.CYAN);
         g.fillOval((int) game.getBall().getPosX(), (int) game.getBall().getPosY(), Ball.SIZE, Ball.SIZE);
 
-        if (game.getBall().getPosY() > 800)
+        if (game.getBall().getPosY() > GameplayGui.HEIGHT)
         {
-            game.play = false;
+            game.stop();
             game.getBall().setDir(0, 0);
             g.setColor(Color.red);
             g.setFont(new Font("serif", Font.BOLD, 50));
-            g.drawString("GAME OVER Score: " + game.score, 150, 420);
+            g.drawString("GAME OVER Score: " + game.getScore(), 150, 420);
         }
 
         g.dispose();
