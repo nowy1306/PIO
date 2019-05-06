@@ -59,7 +59,7 @@ public class Menu extends JPanel
         setVisible(false);
         EventQueue.invokeLater(()->
         {
-            ArkanoidFrame frame = (ArkanoidFrame) SwingUtilities.getWindowAncestor(this);
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             GameplayGui gui = new GameplayGui();
             frame.add(gui);
             gui.requestFocus();
@@ -73,7 +73,7 @@ public class Menu extends JPanel
         setVisible(false);
         EventQueue.invokeLater(()->
         {
-            ArkanoidFrame frame = (ArkanoidFrame) SwingUtilities.getWindowAncestor(this);
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             HighScore highScore = new HighScore();
             frame.add(highScore);
             highScore.requestFocus();

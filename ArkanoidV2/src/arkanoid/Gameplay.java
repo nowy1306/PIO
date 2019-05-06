@@ -14,7 +14,6 @@ public class Gameplay extends KeyAdapter implements ActionListener
     private int keyCode;
     private static final int ANIMATION_DELAY = 6;
     private static final int PADDLE_DELAY = 20;
-    private static final double BALL_SPEED = 5;
 
     private MapGenerator map;
     private Paddle paddle;
@@ -60,18 +59,18 @@ public class Gameplay extends KeyAdapter implements ActionListener
 
                 double a = ball.getPosX() - paddle.getPosX() + Ball.SIZE / 2.0;
                 double alf_d;
-                double alf_r;
+
                 if (a <= (Paddle.PADDLE_LENGTH / 2))
                 {
                     alf_d = 30 + 60 * a / (Paddle.PADDLE_LENGTH / 2);
-                    alf_r = Math.toRadians(alf_d);
-                    ball.setDir((-1) * BALL_SPEED * Math.cos(alf_r), (-1) * BALL_SPEED * Math.sin(alf_r));
+                    ball.setDir(-1, -1);
                 } else
                 {
                     alf_d = 150 - 60 * a / (Paddle.PADDLE_LENGTH / 2);
-                    alf_r = Math.toRadians(alf_d);
-                    ball.setDir(BALL_SPEED * Math.cos(alf_r), (-1) * BALL_SPEED * Math.sin(alf_r));
+                    ball.setDir(1, -1);
                 }
+                ball.setAngle(alf_d);
+
 
             }
 
@@ -96,27 +95,28 @@ public class Gameplay extends KeyAdapter implements ActionListener
                             score += 5;
                             if (ball.getPosX() + Ball.SIZE - 1 <= brickRect.x || ball.getPosX() + 1 >= brickRect.x + brickRect.width)
                             {
-                                ball.setDir(ball.ballXdir * (-1), ball.ballYdir);
+                                ball.setDir(-ball.getXDir(), ball.getYDir());
                             } else
                             {
-                                ball.setDir(ball.ballXdir, ball.ballYdir * (-1));
+                                ball.setDir(ball.getXDir(), -ball.getYDir());
                             }
                         }
                     }
                 }
             }
+
             ball.move();
             if (ball.getPosX() < 0)
             {
-                ball.setDir(-ball.ballXdir, ball.ballYdir);
+                ball.setDir(-ball.getXDir(), ball.getYDir());
             }
             if (ball.getPosY() < 0)
             {
-                ball.setDir(ball.ballXdir, -ball.ballYdir);
+                ball.setDir(ball.getXDir(), -ball.getYDir());
             }
             if (ball.getPosX() > GameplayGui.WIDTH - Ball.SIZE)
             {
-                ball.setDir(-ball.ballXdir, ball.ballYdir);
+                ball.setDir(-ball.getXDir(), ball.getYDir());
             }
         }
 
