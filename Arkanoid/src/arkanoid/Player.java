@@ -5,11 +5,13 @@
  */
 package arkanoid;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mjgaj
  */
-public class Player implements Comparable<Player> {
+public class Player implements Comparable<Player>, Serializable {
     private String username;
     private int score;
     

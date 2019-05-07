@@ -1,9 +1,6 @@
 package arkanoid;
 
 import GUI_arkanoid.MainGui;
-import GUI_arkanoid.Menu;
-import java.awt.Graphics;
-import javax.swing.JFrame;
 
 public class Arkanoid {
 
