@@ -1,7 +1,8 @@
 package arkanoid;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Rectangle2D;
 import javax.swing.Timer;
 
 public class Gameplay extends KeyAdapter implements ActionListener
@@ -12,18 +13,30 @@ public class Gameplay extends KeyAdapter implements ActionListener
     private Timer animationTimer;
     private Timer paddleTimer;
     private int keyCode;
-    private static final int ANIMATION_DELAY = 6;
-    private static final int PADDLE_DELAY = 20;
+    private static final int ANIMATION_DELAY = 1;
+    private static final int PADDLE_DELAY = 16;
 
-    private MapGenerator map;
+    private Brick[][] bricks;
     private Paddle paddle;
     private Ball ball;
+
+    private Brick curr = null;
+
+    public Brick get()
+    {
+        return curr;
+    }
+
+    public void set()
+    {
+        curr = null;
+    }
 
     public Gameplay()
     {
         ball = new Ball();
         paddle = new Paddle();
-        map = new MapGenerator();
+        bricks = MapGenerator.generateBricks();
 
         animationTimer = new Timer(ANIMATION_DELAY, this);
         paddleTimer = new Timer(PADDLE_DELAY, actionEvent -> {
@@ -42,8 +55,6 @@ public class Gameplay extends KeyAdapter implements ActionListener
                 }
             }
         });
-        animationTimer.start();
-        paddleTimer.start();
 
     }
 
@@ -60,7 +71,7 @@ public class Gameplay extends KeyAdapter implements ActionListener
                 double a = ball.getPosX() - paddle.getPosX() + Ball.SIZE / 2.0;
                 double alf_d;
 
-                if (a <= (Paddle.PADDLE_LENGTH / 2))
+                if (a <= (Paddle.PADDLE_LENGTH / 2.0))
                 {
                     alf_d = 30 + 60 * a / (Paddle.PADDLE_LENGTH / 2);
                     ball.setDir(-1, -1);
@@ -74,38 +85,67 @@ public class Gameplay extends KeyAdapter implements ActionListener
 
             }
 
-            for (int i = 0; i < map.map.length; i++)
+            Rectangle2D.Double ballCuboid = new Rectangle2D.Double(ball.getPosX(), ball.getPosY(), Ball.SIZE, Ball.SIZE);
+            Brick nearestBrick = null;
+            double distance = Double.MAX_VALUE;
+
+            for(int i = 0; i < MapGenerator.ROW_BRICKS_NUMBER; i++)
             {
-                for (int j = 0; j < map.map[0].length; j++)
+                for(int j = 0; j < MapGenerator.COL_BRICKS_NUMBER; j++)
                 {
-                    if (map.map[i][j] > 0)
+
+                    Brick brick = bricks[i][j];
+                    if(brick != null)
                     {
-                        int brickX = j * map.brickWidth + 62 + j * 5;
-                        int brickY = i * map.brickHeight + 60 + i * 5;
-                        int brickWidth = map.brickWidth;
-                        int brickHight = map.brickHeight;
+                        Rectangle2D.Double currentBrickCuboid = new Rectangle2D.Double(brick.getXPos(), brick.getYPos(), Brick.BRICK_WIDTH, Brick.BRICK_HEIGHT);
 
-                        Rectangle rect = new Rectangle(brickX, brickY, brickWidth, brickHight);
-                        Rectangle ballRect = new Rectangle((int) ball.getPosX(), (int) ball.getPosY(), Ball.SIZE, Ball.SIZE);
-                        Rectangle brickRect = rect;
 
-                        if (ballRect.intersects(brickRect))
+                        if (ballCuboid.intersects(currentBrickCuboid))
                         {
-                            map.setBrickValue(map.map[i][j] - 1, i, j);
-                            score += 5;
-                            if (ball.getPosX() + Ball.SIZE - 1 <= brickRect.x || ball.getPosX() + 1 >= brickRect.x + brickRect.width)
+                            double currentDistance = Math.sqrt(Math.pow(ball.getCenterXPos() - brick.getCenterXPos(), 2) + Math.pow(ball.getCenterYPos() - brick.getCenterYPos(), 2));
+                            if (currentDistance < distance)
                             {
-                                ball.setDir(-ball.getXDir(), ball.getYDir());
-                            } else
-                            {
-                                ball.setDir(ball.getXDir(), -ball.getYDir());
+                                //System.out.println("ddd");
+                                distance = currentDistance;
+                                nearestBrick = brick;
+                                //curr = nearestBrick;
                             }
                         }
                     }
                 }
             }
 
+            if(nearestBrick != null)
+            {
+                Rectangle2D.Double nearestBrickCuboid = new Rectangle2D.Double(nearestBrick.getXPos(), nearestBrick.getYPos(), Brick.BRICK_WIDTH, Brick.BRICK_HEIGHT);
+                Rectangle2D intersectedRect = ballCuboid.createIntersection(nearestBrickCuboid);
+
+                if(intersectedRect.getWidth() >= intersectedRect.getHeight())
+                {
+                    ball.setDir(ball.getXDir(), -ball.getYDir());
+                }
+                else
+                {
+                    ball.setDir(-ball.getXDir(), ball.getYDir());
+                }
+                nearestBrick.setHealth(nearestBrick.getHealth() - 1);
+
+                if(nearestBrick.getHealth() < 1)
+                {
+                    score += 5;
+                    for(int i = 0; i < MapGenerator.ROW_BRICKS_NUMBER; i++)
+                    {
+                        for (int j = 0; j < MapGenerator.COL_BRICKS_NUMBER; j++)
+                        {
+                            if(bricks[i][j] == nearestBrick)
+                                bricks[i][j] = null;
+                        }
+                    }
+                }
+            }
+
             ball.move();
+
             if (ball.getPosX() < 0)
             {
                 ball.setDir(-ball.getXDir(), ball.getYDir());
@@ -132,9 +172,9 @@ public class Gameplay extends KeyAdapter implements ActionListener
         return paddle;
     }
 
-    public MapGenerator getMap()
+    public Brick[][] getBricks()
     {
-        return map;
+        return bricks;
     }
 
     public int getScore()

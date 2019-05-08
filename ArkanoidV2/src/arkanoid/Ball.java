@@ -2,11 +2,11 @@ package arkanoid;
 
 public class Ball
 {
-    private static final double START_X_POS = 120.0;
-    private static final double START_Y_POS = 550.0;
+    private static final double START_X_POS = 420.0;
+    private static final double START_Y_POS = 450.0;
     private static final double START_X_DIR = -1.0;
     private static final double START_Y_DIR = -1.0;
-    private static final double BALL_SPEED = 5.0;
+    private static final double BALL_SPEED = 2;
     private static final double START_ANGLE = 45.0;
     private double angle;
     private double xPos;
@@ -71,5 +71,15 @@ public class Ball
     {
         xPos += xDir * BALL_SPEED * Math.cos(Math.toRadians(angle));
         yPos += yDir * BALL_SPEED * Math.sin(Math.toRadians(angle));
+    }
+
+    public double getCenterXPos()
+    {
+        return xPos + SIZE / 2.0;
+    }
+
+    public double getCenterYPos()
+    {
+        return yPos + SIZE / 2.0;
     }
 }

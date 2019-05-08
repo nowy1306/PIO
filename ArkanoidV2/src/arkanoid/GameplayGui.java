@@ -1,6 +1,7 @@
 package arkanoid;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import javax.swing.*;
 
 public class GameplayGui extends JPanel
@@ -8,7 +9,7 @@ public class GameplayGui extends JPanel
     public static final int WIDTH = 800;
     public static final int HEIGHT = 800;
     Gameplay game;
-    private int fpsDelay = 20;
+    private int fpsDelay = 1;
     Timer fpsTimer;
 
     public GameplayGui()
@@ -34,18 +35,26 @@ public class GameplayGui extends JPanel
     {
         //tło
         g.setColor(Color.black);
-        g.fillRect(0, 0, 800, 800);
-
-        //granice
-        /*
-        g.setColor(Color.gray);
-        g.fillRect(0, 0, 10, 800);
-        g.fillRect(0, 0, 800, 10);
-        g.fillRect(784, 0, 10, 800);
-         */
+        g.fillRect(0, 0, GameplayGui.WIDTH, GameplayGui.HEIGHT);
 
         //map
-        game.getMap().draw((Graphics2D) g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.RED);
+        Brick[][] bricks = game.getBricks();
+        for(int i = 0; i < MapGenerator.ROW_BRICKS_NUMBER; i++)
+        {
+            for(int j = 0; j < MapGenerator.COL_BRICKS_NUMBER; j++)
+            {
+                Brick brick = bricks[i][j];
+                if(brick != null)
+                {
+                    Rectangle2D.Double rect = new Rectangle2D.Double(brick.getXPos(), brick.getYPos(), Brick.BRICK_WIDTH, Brick.BRICK_HEIGHT);
+                    g2.fill(rect);
+                }
+            }
+        }
+
+
         // platforma
         g.setColor(Color.blue);
         g.fillRect(game.getPaddle().getPosX(), game.getPaddle().getPosY(), Paddle.PADDLE_LENGTH, Paddle.PADDLE_THICKNESS);
