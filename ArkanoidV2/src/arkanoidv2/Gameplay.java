@@ -19,7 +19,8 @@ public class Gameplay extends KeyAdapter implements ActionListener {
     private int score = 0;
     private Timer animationTimer;
     private Timer paddleTimer;
-    private int keyCode;
+    private int keyCodeLeft;
+    private int keyCodeRight;
     private static final int BALL_DELAY = 4;
     private static final int PADDLE_DELAY = 20;
 
@@ -52,12 +53,12 @@ public class Gameplay extends KeyAdapter implements ActionListener {
 
         animationTimer = new Timer(BALL_DELAY, this);
         paddleTimer = new Timer(PADDLE_DELAY, actionEvent -> {
-            if (keyCode == KeyEvent.VK_RIGHT && !pause) {
+            if (keyCodeRight == 1 && !pause) {
                 if (paddle.getPosX() < GameplayGui.WIDTH - Paddle.PADDLE_LENGTH) {
                     paddle.moveRight();
                 }
             }
-            if (keyCode == KeyEvent.VK_LEFT && !pause) {
+            if (keyCodeLeft == 1 && !pause) {
                 if (paddle.getPosX() > 0) {
                     paddle.moveLeft();
                 }
@@ -136,20 +137,25 @@ public class Gameplay extends KeyAdapter implements ActionListener {
     @Override
     public void keyPressed(KeyEvent e) {
         play = true;
-        if (keyCode == 0) {
-            keyCode = e.getKeyCode();
-        }
         if (e.getKeyCode() == KeyEvent.VK_P) {
             pause = !pause;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_F8) {
+        } else if (e.getKeyCode() == KeyEvent.VK_F8) {
             ballList.add(new Ball());
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            keyCodeLeft = 1;
+        }else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            keyCodeRight = 1;
         }
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        keyCode = 0;
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            keyCodeLeft = 0;
+        }else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            keyCodeRight = 0;
+        }
     }
 
     class BallThread extends Thread {
@@ -221,9 +227,9 @@ public class Gameplay extends KeyAdapter implements ActionListener {
                             ball.setDir(-ball.getXDir(), ball.getYDir());
                         }
                         nearestBrick.setHealth(nearestBrick.getHealth() - 1);
-
+                        score += 5;
                         if (nearestBrick.getHealth() < 1) {
-                            score += 5;
+                            
                             for (int i = 0; i < MapGenerator.ROW_BRICKS_NUMBER; i++) {
                                 for (int j = 0; j < MapGenerator.COL_BRICKS_NUMBER; j++) {
                                     if (bricks[i][j] == nearestBrick) {
@@ -250,7 +256,7 @@ public class Gameplay extends KeyAdapter implements ActionListener {
                 if (ball.getPosY() > GameplayGui.HEIGHT) {
                     break;
                 }
-                
+
             }
             System.out.println("koncze");
         }

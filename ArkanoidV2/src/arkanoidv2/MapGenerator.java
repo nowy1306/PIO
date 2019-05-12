@@ -16,7 +16,7 @@ public class MapGenerator
         {
             for (int j = 0; j < COL_BRICKS_NUMBER; j++)
             {
-                bricks[i][j] = new Brick(SPACE + (SPACE + Brick.BRICK_WIDTH) * j, SPACE + (SPACE + Brick.BRICK_HEIGHT) * i, 1);
+                bricks[i][j] = new Brick(SPACE + (SPACE + Brick.BRICK_WIDTH) * j, SPACE + (SPACE + Brick.BRICK_HEIGHT) * i, 5);
             }
         }
 
