@@ -1,11 +1,11 @@
 package arkanoidv2;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.time.Clock;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -14,6 +14,7 @@ public class GameplayGui extends JPanel {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 800;
     Gameplay game;
+    private int stop;
 
     private int fpsDelay = 8;
     Timer fpsTimer;
@@ -135,10 +136,73 @@ public class GameplayGui extends JPanel {
 
             g.setColor(Color.red);
             g.setFont(new Font("serif", Font.BOLD, 50));
-            g.drawString("GAME OVER Score: " + game.getScore(), 150, 420);
+            g.drawString("GAME OVER Score: " + game.getScore(), 150, 320);
+            if (stop == 2) {
+                fpsTimer.stop();
+            }
+            stop++;
+            if (stop == 1) {
+                showMessage();
+            }
         }
 
         g.dispose();
     }
 
+    public void showMessage() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        final JOptionPane optionPane = new JOptionPane("Do you want to save your score?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+        final JDialog dialog = new JDialog(frame, "Wanna join the leaderboard?", true);
+        dialog.setContentPane(optionPane);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.setLocationRelativeTo(frame);
+
+        optionPane.addPropertyChangeListener((PropertyChangeEvent e) -> {
+            String prop = e.getPropertyName();
+            
+            if (dialog.isVisible()
+                    && (e.getSource() == optionPane)
+                    && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                dialog.setVisible(false);
+            }
+        });
+        dialog.pack();
+        dialog.setVisible(true);
+
+        int value = ((Integer) optionPane.getValue()).intValue();
+        if (value == JOptionPane.YES_OPTION) {
+            displayPlayerScoreIn();
+        } else if (value == JOptionPane.NO_OPTION) {
+            displayMenu();
+        }
+        
+    }
+    
+    public void displayPlayerScoreIn()
+    {
+
+        setVisible(false);
+        EventQueue.invokeLater(()->
+        {
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            PlayerScoreInGui gui = new PlayerScoreInGui(game.getScore());
+            frame.add(gui);
+            gui.requestFocus();
+            frame.pack();
+        });
+
+    }
+    public void displayMenu() {
+
+        setVisible(false);
+        EventQueue.invokeLater(()
+                -> {
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            Menu menu = new Menu();
+            frame.add(menu);
+            menu.requestFocus();
+            frame.pack();
+        });
+
+    }
 }

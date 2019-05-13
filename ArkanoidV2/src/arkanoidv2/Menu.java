@@ -2,6 +2,9 @@ package arkanoidv2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Menu extends JPanel
 {
@@ -74,7 +77,14 @@ public class Menu extends JPanel
         EventQueue.invokeLater(()->
         {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            HighScore highScore = new HighScore();
+            HighScoreGui highScore = null;
+            try {
+                highScore = new HighScoreGui();
+            } catch (IOException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
             frame.add(highScore);
             highScore.requestFocus();
             frame.pack();
