@@ -22,6 +22,7 @@ public class PlayerScoreInGui extends JPanel {
         score = usersScore;
         players = new ArrayList<>();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setPreferredSize(new Dimension(800, 800));
 
         addLabel("GAME OVER", CENTER_ALIGNMENT, new Dimension(300, 40), new Font("Verdana", 1, 40));
         add(Box.createRigidArea(new Dimension(0, 10)));
