@@ -1,5 +1,6 @@
-package arkanoid;
+package GUI_arkanoid;
 
+import arkanoid.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +14,7 @@ public class Menu extends JPanel {
     JFrame obj;
 
     public Menu(String name, JFrame o) {
- 
+
         obj = o;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -47,7 +48,7 @@ public class Menu extends JPanel {
     }
 
     void setgame() {
-        obj.add(new Gameplay());
+        obj.add(new GameplayGui());
         this.setVisible(false);
         obj.repaint();
     }
@@ -60,7 +61,6 @@ public class Menu extends JPanel {
 
     private class ButtonAction implements ActionListener {
 
-        private Color bC;
         private int choice;
 
         public ButtonAction(int x) {
