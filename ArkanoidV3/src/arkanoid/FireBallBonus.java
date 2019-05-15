@@ -24,7 +24,7 @@ public class FireBallBonus implements IBonus {
         posX = x;
         posY = y;
         id = 1;
-        duration = 1000;
+        duration = 4000;
         action = new Thread(){
             @Override
             public void run(){

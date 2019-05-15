@@ -23,6 +23,13 @@ public class Ball
         yDir = START_Y_DIR;
         angle = START_ANGLE;
     }
+    public Ball(double xPos, double yPos, double xDir, double yDir, double angle){
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.xDir = xDir;
+        this.yDir = yDir;
+        this.angle = angle;
+    }
 
     public void setPos(double x, double y)
     {

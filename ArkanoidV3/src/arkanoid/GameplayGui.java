@@ -15,7 +15,6 @@ public class GameplayGui extends JPanel
     public static final int WIDTH = 800;
     public static final int HEIGHT = 800;
     private Gameplay game;
-    private int stop;
 
     private int displayDelay = 8;
     private Timer displayTimer;
@@ -24,6 +23,7 @@ public class GameplayGui extends JPanel
     private Image b3Img;
     private Image b4Img;
     private Image b5Img;
+    
 
     public GameplayGui()
     {
@@ -167,13 +167,21 @@ public class GameplayGui extends JPanel
 
         }
 
-        if (game.getNofT() == 0)
+        if (game.getNofT() == 0 && !game.isWin())
         {
 
             g.setColor(Color.red);
             g.setFont(new Font("serif", Font.BOLD, 50));
             g.drawString("GAME OVER Score: " + game.getScore(), 150, 320);
 
+        }
+        if(game.getNofBrics() == 0){
+            g.setColor(Color.PINK);
+            g.setFont(new Font("serif", Font.ITALIC, 50));
+            g.drawString("YOU WIN!", 150, 320);
+            g.setFont(new Font("serif", Font.ROMAN_BASELINE, 14));
+            g.drawString("Let the balls fall to save the score", 450, 330);
+            game.setIsWin(true);
         }
 
         g.dispose();
@@ -220,7 +228,7 @@ public class GameplayGui extends JPanel
         EventQueue.invokeLater(() ->
         {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            PlayerScoreInGui gui = new PlayerScoreInGui(game.getScore());
+            PlayerScoreInGui gui = new PlayerScoreInGui(game.getScore(), game.isWin());
             frame.add(gui);
             gui.requestFocus();
             frame.pack();
