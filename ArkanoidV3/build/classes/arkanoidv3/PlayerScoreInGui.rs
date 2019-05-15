@@ -1,0 +1,1 @@
+arkanoid.PlayerScoreInGui
