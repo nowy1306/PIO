@@ -8,7 +8,7 @@ public class BigBallBonus implements IBonus
     private boolean active;
     private static int actionTime = 10000; //in ms
     private Thread abilityThread;
-    private static double LENGTH_INCREASE = 1.1;
+    private static double LENGTH_INCREASE = 1.5;
     private static int counter;
 
     public BigBallBonus(Paddle paddle, int x, int y)
@@ -46,7 +46,7 @@ public class BigBallBonus implements IBonus
     @Override
     public void move()
     {
-        yPos += 2;
+        yPos += 1;
     }
 
     @Override

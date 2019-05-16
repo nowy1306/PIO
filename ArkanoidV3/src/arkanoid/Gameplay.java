@@ -25,7 +25,7 @@ public class Gameplay extends KeyAdapter implements ActionListener {
     private int keyCodeLeft;
     private int keyCodeRight;
     private static final int BALL_DELAY = 2;
-    private static final int PADDLE_DELAY = 10;
+    private static final int PADDLE_DELAY = 16;
 
     private Brick[][] bricks;
     private Paddle paddle;
@@ -125,13 +125,13 @@ public class Gameplay extends KeyAdapter implements ActionListener {
         synchronized (bonusList) {
             if (choice < 850) {
                 ;
-            } else if (choice < 900 && ballList.size() < 8) {
+            } else if (choice < 900 && ballList.size() < 12) {
                 bonusList.add(new MultipleBallBonus(ballList, x, y));
             } else if (choice < 950) {
 
-                bonusList.add(new BigBallBonus(paddle, x, y));
+                bonusList.add(new BigBallBonus(paddle, x, y) );
 
-            } else if (choice < 1000) {
+            } else if (choice < 1000 && !fireBall) {
                 bonusList.add((new FireBallBonus(this, x, y)));
             }
         }

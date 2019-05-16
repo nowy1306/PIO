@@ -1,12 +1,18 @@
 package arkanoid;
 
+import static arkanoid.GameplayGui.HEIGHT;
+import static arkanoid.GameplayGui.WIDTH;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 public class Menu extends JPanel
 {
@@ -16,11 +22,12 @@ public class Menu extends JPanel
     private JButton b3;
     private static final Color BUTTON_BG_COLOR;
     private static final Color BUTTON_BORDER_COLOR;
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 300;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 800;
     private static final int BUTTON_WIDTH = 200;
     private static final int BUTTON_HEIGHT = 50;
-
+    private Image backgroundImg;
+    
     static
     {
         BUTTON_BG_COLOR = new Color(200, 200, 200);
@@ -36,7 +43,17 @@ public class Menu extends JPanel
         b1 = new JButton("Start Game");
         b2 = new JButton("High Score");
         b3 = new JButton("Exit Game");
-        /*
+        try {
+            BufferedImage background;
+            background = ImageIO.read(new File("src\\Graphics\\backgroundmenu.png"));
+            backgroundImg = background.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            System.err.println("bladbackM");
+        }
+        
+        
+        
+        
         b1.setBorder(BorderFactory.createLineBorder(BUTTON_BORDER_COLOR));
         b2.setBorder(BorderFactory.createLineBorder(BUTTON_BORDER_COLOR));
         b3.setBorder(BorderFactory.createLineBorder(BUTTON_BORDER_COLOR));
@@ -46,7 +63,7 @@ public class Menu extends JPanel
         b2.addMouseListener(mouseAction);
         b3.addMouseListener(mouseAction);
 
-         */
+         
 
         b1.setAlignmentX(CENTER_ALIGNMENT);
         b1.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
@@ -59,7 +76,9 @@ public class Menu extends JPanel
 
         add(Box.createRigidArea(new Dimension(0, (HEIGHT - 3 * BUTTON_HEIGHT) / 2)));
         add(b1);
+        add(Box.createRigidArea(new Dimension(0, 50)));
         add(b2);
+        add(Box.createRigidArea(new Dimension(0, 50)));
         add(b3);
 
         b1.addActionListener(actionEvent ->
@@ -76,7 +95,15 @@ public class Menu extends JPanel
         });
 
     }
-
+    
+    @Override
+    public void paintComponent(Graphics g){
+        g.drawImage(backgroundImg, 0, 0, null);
+       // b1.repaint();
+        //b2.repaint();
+        //b3.repaint();
+    }
+    
     class MouseAction extends MouseAdapter
     {
         Color bg;

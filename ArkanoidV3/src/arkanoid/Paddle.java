@@ -6,7 +6,7 @@ public class Paddle
     private int paddleposX = 310;
     private int paddleposY = 720;
     private int length;
-    public static final int START_PADDLE_LENGTH = 200;
+    public static final int START_PADDLE_LENGTH = 120;
     public static final int START_PADDLE_THICKNESS = 10;
 
 

@@ -6,7 +6,7 @@ public class Ball
     private static final double START_Y_POS = 450.0;
     private static final double START_X_DIR = -1.0;
     private static final double START_Y_DIR = -1.0;
-    private static final double BALL_SPEED = 1.5;
+    private static final double BALL_SPEED = 1.2;
     private static final double START_ANGLE = 60.0;
     private double angle;
     private double xPos;

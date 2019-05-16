@@ -39,7 +39,7 @@ public class MultipleBallBonus implements IBonus {
 
     @Override
     public void move() {
-        yPos += 2;
+        yPos += 1;
     }
 
     @Override

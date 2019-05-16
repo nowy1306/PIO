@@ -31,7 +31,7 @@ public class HighScoreGui extends JPanel
 
     public HighScoreGui() throws IOException, ClassNotFoundException
     {
-        setPreferredSize(new Dimension(300, 300));
+        setPreferredSize(new Dimension(800, 800));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         addLabel("LEADERBOARD", CENTER_ALIGNMENT, new Dimension(250, 40), new Font("Verdana", 7, 30));
 
