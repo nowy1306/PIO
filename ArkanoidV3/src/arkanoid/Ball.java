@@ -6,7 +6,7 @@ public class Ball
     private static final double START_Y_POS = 450.0;
     private static final double START_X_DIR = -1.0;
     private static final double START_Y_DIR = -1.0;
-    private static final double BALL_SPEED = 1.5;
+    private static final double BALL_SPEED = 1.2;
     private static final double START_ANGLE = 60.0;
     private double angle;
     private double xPos;
@@ -22,6 +22,13 @@ public class Ball
         xDir = START_X_DIR;
         yDir = START_Y_DIR;
         angle = START_ANGLE;
+    }
+    public Ball(double xPos, double yPos, double xDir, double yDir, double angle){
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.xDir = xDir;
+        this.yDir = yDir;
+        this.angle = angle;
     }
 
     public void setPos(double x, double y)

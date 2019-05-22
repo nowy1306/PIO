@@ -16,7 +16,6 @@ public class FireBallBonus implements IBonus {
     private Gameplay game;
 
 
-
     public FireBallBonus(Gameplay g, int x, int y) {
        // fireBall = fb;
         game =g;
@@ -24,7 +23,7 @@ public class FireBallBonus implements IBonus {
         posX = x;
         posY = y;
         id = 1;
-        duration = 1000;
+        duration = 15000;
         action = new Thread(){
             @Override
             public void run(){
@@ -47,7 +46,7 @@ public class FireBallBonus implements IBonus {
 
     @Override
     public void move() {
-        posY += 2;
+        posY += 1;
     }
 
     @Override

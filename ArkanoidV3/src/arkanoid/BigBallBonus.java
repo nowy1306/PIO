@@ -8,7 +8,7 @@ public class BigBallBonus implements IBonus
     private boolean active;
     private static int actionTime = 10000; //in ms
     private Thread abilityThread;
-    private static double LENGTH_INCREASE = 1.25;
+    private static double LENGTH_INCREASE = 1.5;
     private static int counter;
 
     public BigBallBonus(Paddle paddle, int x, int y)
@@ -18,12 +18,14 @@ public class BigBallBonus implements IBonus
         active = true;
         abilityThread = new Thread(() ->
         {
+
             int prevLength = paddle.getLength();
 
             counter++;
             paddle.setLength((int) (prevLength * LENGTH_INCREASE));
             try
             {
+
                 Thread.sleep(actionTime);
             }
             catch (InterruptedException e)
@@ -46,7 +48,7 @@ public class BigBallBonus implements IBonus
     @Override
     public void move()
     {
-        yPos += 2;
+        yPos += 1;
     }
 
     @Override
